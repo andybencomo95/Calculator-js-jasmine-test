@@ -1,0 +1,22 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-docker-image
+spec:
+  params:
+    - name: image
+      type: string
+    - name: registry
+      type: string
+  workspaces:
+    - name: source
+  steps:
+    - name: build-and-push
+      image: docker:24-dind
+      script: |
+        #!/bin/sh
+        apk add --no-cache docker-cli
+        docker build -t $(params.registry)/$(params.image) .
+        echo "Image built: $(params.registry)/$(params.image)"
+      securityContext:
+        privileged: true

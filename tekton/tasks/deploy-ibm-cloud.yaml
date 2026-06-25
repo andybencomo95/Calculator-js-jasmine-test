@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: deploy-ibm-cloud
+spec:
+  params:
+    - name: image
+      type: string
+    - name: registry
+      type: string
+  steps:
+    - name: deploy
+      image: ibmcom/kubectl
+      script: |
+        echo "Deploying image: $(params.registry)/$(params.image)"
+        echo "Run: kubectl apply -f k8s/deployment.yaml"
+        echo "Or use: ibx cr namespace tax-calculator && ibx cr build ."

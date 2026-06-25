@@ -1,0 +1,19 @@
+{
+  "name": "tax-calculator",
+  "version": "1.0.0",
+  "description": "Calculadora de Impuestos - Tarea Final",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "jasmine"
+  },
+  "keywords": ["tax", "calculator", "express"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "jasmine": "^5.1.0"
+  }
+}

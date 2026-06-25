@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Impuestos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de Impuestos</h1>
+    <form id="taxForm">
+      <label for="amount">Monto Base:</label>
+      <input type="number" id="amount" placeholder="Ej: 1000" step="0.01" required>
+      
+      <label for="taxRate">Porcentaje de Impuesto (%):</label>
+      <input type="number" id="taxRate" placeholder="Ej: 16" step="0.01" required>
+      
+      <button type="submit">Calcular</button>
+    </form>
+    
+    <div id="result" class="result">
+      <h3>Resultado:</h3>
+      <p>Monto Base: $<span id="resAmount"></span></p>
+      <p>Impuesto: $<span id="resTax"></span> (<span id="resRate"></span>%)</p>
+      <p><strong>Total: $<span id="resTotal"></span></strong></p>
+    </div>
+  </div>
+  <script src="taxCalculator.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

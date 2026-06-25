@@ -1,0 +1,65 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: tax-calculator-pipeline
+spec:
+  params:
+    - name: repo-url
+      type: string
+    - name: revision
+      type: string
+      default: main
+    - name: image-name
+      type: string
+      default: tax-calculator
+    - name: registry
+      type: string
+      default: us.icr.io/tax-calculator
+  workspaces:
+    - name: shared-workspace
+  tasks:
+    - name: fetch-source
+      taskRef:
+        name: git-clone
+      params:
+        - name: url
+          value: $(params.repo-url)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: shared-workspace
+
+    - name: run-unit-tests
+      taskRef:
+        name: run-tests
+      runAfter:
+        - fetch-source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: build-image
+      taskRef:
+        name: build-docker-image
+      runAfter:
+        - run-unit-tests
+      params:
+        - name: image
+          value: $(params.image-name)
+        - name: registry
+          value: $(params.registry)
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: deploy-to-cloud
+      taskRef:
+        name: deploy-ibm-cloud
+      runAfter:
+        - build-image
+      params:
+        - name: image
+          value: $(params.image-name)
+        - name: registry
+          value: $(params.registry)

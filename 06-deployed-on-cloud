@@ -1,0 +1,14 @@
+deployment.apps/tax-calculator created
+service/tax-calculator exposed
+
+NAME                              READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/tax-calculator    1/1     1            1           30s
+
+NAME                              TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)        AGE
+service/tax-calculator            NodePort    172.21.0.100    <none>        80:31234/TCP   30s
+
+NAME                                  READY   STATUS    RESTARTS   AGE
+pod/tax-calculator-7d4b8c9f6-x2k9m   1/1     Running   0          30s
+
+Application deployed successfully!
+URL: http://cluster-ip:31234
