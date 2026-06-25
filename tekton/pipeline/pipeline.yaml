@@ -30,11 +30,20 @@ spec:
         - name: output
           workspace: shared-workspace
 
-    - name: run-unit-tests
+    - name: npm-install
       taskRef:
-        name: run-tests
+        name: npm-install
       runAfter:
         - fetch-source
+      workspaces:
+        - name: source
+          workspace: shared-workspace
+
+    - name: jasmine-tests
+      taskRef:
+        name: jasmine-tests
+      runAfter:
+        - npm-install
       workspaces:
         - name: source
           workspace: shared-workspace
@@ -43,7 +52,7 @@ spec:
       taskRef:
         name: build-docker-image
       runAfter:
-        - run-unit-tests
+        - jasmine-tests
       params:
         - name: image
           value: $(params.image-name)
